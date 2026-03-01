@@ -139,29 +139,8 @@ nav {
   to   { width: 100%; }
 }
 
-/* City display area */
-.city-display {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  margin-top: 0.7rem;
-  min-height: 1.6rem;
-  overflow: hidden;
-  position: relative;
-}
-
-.city-name-wrap {
-  position: relative;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-}
-
-.city-name {
-  font-weight: 900;
-  font-size: 1.08rem;
-  color: var(--pink);
-  letter-spacing: 0.04em;
+/* Headline city name animation */
+.hero-city-name {
   display: inline-block;
   animation: slideInCity 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
@@ -169,31 +148,6 @@ nav {
 @keyframes slideInCity {
   from { opacity: 0; transform: translateY(120%); }
   to   { opacity: 1; transform: translateY(0); }
-}
-
-.city-sep {
-  font-weight: 400;
-  font-size: 0.82rem;
-  color: var(--muted);
-  margin: 0 0.1rem;
-}
-
-.city-label {
-  font-weight: 400;
-  font-size: 0.82rem;
-  color: var(--muted);
-  animation: fadeIn 0.45s ease both;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to   { opacity: 1; }
-}
-
-/* Headline city name animation */
-.hero-city-name {
-  display: inline-block;
-  animation: slideInCity 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 .h-img {
@@ -381,15 +335,6 @@ footer {
           <button class="city-pill inactive" data-idx="2">KUWAIT</button>
         </div>
       </div>
-
-      <!-- Animated city subtitle -->
-      <div class="city-display a d3">
-        <div class="city-name-wrap">
-          <span class="city-name" id="city-name">RIYADH</span>
-        </div>
-        <span class="city-sep">&mdash;</span>
-        <span class="city-label" id="city-label">Season 1 &middot; Q4 2026</span>
-      </div>
     </div>
     <div class="h-img a d2">
       <img src="images/vibe-coding.jpeg" alt="Team collaborating" onerror="this.remove()">
@@ -502,17 +447,15 @@ footer {
 
   /* ── City Carousel ── */
   const cities = [
-    { name: 'RIYADH',  label: '' },
-    { name: 'DUBAI',   label: '' },
-    { name: 'KUWAIT',  label: '' },
+    { name: 'RIYADH' },
+    { name: 'DUBAI'  },
+    { name: 'KUWAIT' },
   ];
 
   let current = 0;
   let autoTimer = null;
 
   const pills      = document.querySelectorAll('.city-pill');
-  const cityName   = document.getElementById('city-name');
-  const cityLbl    = document.getElementById('city-label');
   const heroCityEl = document.getElementById('hero-city-name');
   const navCityEl  = document.getElementById('nav-city');
 
@@ -521,16 +464,6 @@ footer {
       p.classList.toggle('active', i === idx);
       p.classList.toggle('inactive', i !== idx);
     });
-
-    // Subtitle animation
-    cityName.style.animation = 'none';
-    cityLbl.style.animation  = 'none';
-    void cityName.offsetWidth;
-    void cityLbl.offsetWidth;
-    cityName.textContent = cities[idx].name;
-    cityLbl.textContent  = cities[idx].label;
-    cityName.style.animation = 'slideInCity 0.45s cubic-bezier(0.22,1,0.36,1) both';
-    cityLbl.style.animation  = 'fadeIn 0.45s ease both';
 
     // Headline animation
     heroCityEl.style.animation = 'none';
