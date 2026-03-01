@@ -58,7 +58,7 @@ nav {
   background: var(--pink); color: var(--white);
   padding: 0.4rem 1.2rem; font-family: inherit; font-weight: 700; font-size: 0.78rem;
   letter-spacing: 0.06em; text-decoration: none; border: none; cursor: pointer;
-  transition: opacity 0.2s;
+  transition: opacity 0.2s; display: inline-block;
 }
 .n-btn:hover { opacity: 0.85; }
 
@@ -85,7 +85,7 @@ nav {
 .city-carousel {
   display: flex;
   align-items: center;
-  gap: 0.6rem;
+  gap: 0.4rem;
   margin-top: 1.6rem;
   user-select: none;
 }
@@ -190,48 +190,10 @@ nav {
   to   { opacity: 1; }
 }
 
-/* Carousel arrow buttons */
-.carousel-arrow {
-  background: var(--bg2);
-  border: none;
-  cursor: pointer;
-  font-family: inherit;
-  width: 28px;
-  height: 28px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--dark);
-  font-size: 0.75rem;
-  font-weight: 700;
-  transition: background 0.2s, transform 0.15s;
-  flex-shrink: 0;
-}
-.carousel-arrow:hover {
-  background: var(--pink);
-  color: var(--white);
-  transform: scale(1.08);
-}
-
-/* Dots indicator */
-.carousel-dots {
-  display: flex;
-  gap: 5px;
-  align-items: center;
-  margin-left: 0.3rem;
-}
-.carousel-dot {
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: var(--bg2);
-  transition: background 0.3s, transform 0.3s;
-  cursor: pointer;
-  border: none;
-}
-.carousel-dot.active {
-  background: var(--pink);
-  transform: scale(1.3);
+/* Headline city name animation */
+.hero-city-name {
+  display: inline-block;
+  animation: slideInCity 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 .h-img {
@@ -340,15 +302,44 @@ nav {
 }
 .cta h2 em { font-style: normal; color: var(--white); display: block; text-decoration: underline; text-underline-offset: 4px; }
 .cta .sub { font-size: 0.95rem; color: rgba(255,255,255,0.8); margin: 0.8rem 0 1.8rem; }
+
 .cta-btn {
-  display: inline-block; background: var(--white); color: var(--pink);
-  padding: 0.85rem 2.5rem; font-family: inherit; font-weight: 900; font-size: 0.95rem;
-  text-decoration: none; border: none; cursor: pointer; transition: all 0.25s;
+  display: inline-block;
+  background: var(--white);
+  color: var(--pink);
+  padding: 0.85rem 2.5rem;
+  font-family: inherit;
+  font-weight: 900;
+  font-size: 0.95rem;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: all 0.25s;
+  position: relative;
+  z-index: 30;
 }
-.cta-btn:hover { background: var(--bg2); color: var(--pink); }
-.cta .ct { margin-top: 1.3rem; font-size: 0.82rem; color: rgba(255,255,255,0.65); }
+.cta-btn:hover { 
+  background: var(--bg2); 
+  color: var(--pink);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.cta .ct { 
+  margin-top: 1.3rem; 
+  font-size: 0.82rem; 
+  color: rgba(255,255,255,0.65);
+  position: relative;
+  z-index: 30;
+}
 .cta .ct strong { color: var(--white); }
-.cta .ct a { color: var(--white); text-decoration: underline; text-underline-offset: 3px; opacity: 0.85; transition: opacity 0.2s; }
+.cta .ct a { 
+  color: var(--white); 
+  text-decoration: underline; 
+  text-underline-offset: 3px; 
+  opacity: 0.85; 
+  transition: opacity 0.2s;
+}
 .cta .ct a:hover { opacity: 1; }
 
 footer {
@@ -371,41 +362,34 @@ footer {
 <body>
 
 <nav>
-  <div class="n-logo">VIBE <span>RIYADH.</span></div>
+  <div class="n-logo">VIBE <span id="nav-city">RIYADH.</span></div>
   <a href="mailto:tarek@nowcompany.team?subject=Vibe%20Riyadh%20%E2%80%94%20Partnership%20Enquiry&body=Hi%20Tarek%2C%0A%0AI%E2%80%99m%20interested%20in%20partnering%20with%20Vibe%20Riyadh.%0A%0A" class="n-btn">GET EARLY ACCESS</a>
 </nav>
 
 <section class="hero">
   <div class="hero-g">
     <div>
-      <h1 class="a">VIBE<span class="pk">RIYADH.</span></h1>
+      <h1 class="a">VIBE<span class="pk" id="hero-city-span"><span class="hero-city-name" id="hero-city-name">RIYADH.</span></span></h1>
       <p class="hero-p a d1">The Gulf's first vibe coding academy.</p>
       <p class="hero-sm a d2">2 weeks. 1 real product. No code required.</p>
 
-      <!-- City Carousel -->
+      <!-- City Carousel — no arrows, no dots -->
       <div class="city-carousel a d2">
-        <button class="carousel-arrow" id="prev-btn" aria-label="Previous city">&#8592;</button>
         <div class="city-carousel-track" id="carousel-track">
           <button class="city-pill active" data-idx="0">RIYADH</button>
           <button class="city-pill inactive" data-idx="1">DUBAI</button>
           <button class="city-pill inactive" data-idx="2">KUWAIT</button>
         </div>
-        <div class="carousel-dots" id="carousel-dots">
-          <button class="carousel-dot active" data-idx="0"></button>
-          <button class="carousel-dot" data-idx="1"></button>
-          <button class="carousel-dot" data-idx="2"></button>
-        </div>
-        <button class="carousel-arrow" id="next-btn" aria-label="Next city">&#8594;</button>
       </div>
 
       <!-- Animated city subtitle -->
-      <div class="city-display a d3">
+      <!-- <div class="city-display a d3">
         <div class="city-name-wrap">
           <span class="city-name" id="city-name">RIYADH</span>
         </div>
         <span class="city-sep">&mdash;</span>
         <span class="city-label" id="city-label">Season 1 &middot; Q4 2026</span>
-      </div>
+      </div> -->
     </div>
     <div class="h-img a d2">
       <img src="images/vibe-coding.jpeg" alt="Team collaborating" onerror="this.remove()">
@@ -496,13 +480,12 @@ footer {
   <div class="cta-in">
     <h2 class="a">Let's build the future of tech education in the Arabian Gulf.<em>Together.</em></h2>
     <p class="sub a d1">Season 1 launches Q4 2026. Limited to 30 students.</p>
-    <a
-      href="mailto:tarek@nowcompany.team?subject=Vibe%20Riyadh%20%E2%80%94%20Partnership%20Enquiry&body=Hi%20Tarek%2C%0A%0AI%E2%80%99m%20interested%20in%20partnering%20with%20Vibe%20Riyadh.%0A%0A"
-      class="cta-btn a d2"
-    >Partner With Us</a>
+    <button class="cta-btn a d2" onclick="window.location.href='mailto:tarek@nowcompany.team?subject=Vibe%20Riyadh%20%E2%80%94%20Partnership%20Enquiry&body=Hi%20Tarek%2C%0A%0AI%E2%80%99m%20interested%20in%20partnering%20with%20Vibe%20Riyadh.%0A%0APlease%20tell%20me%20more%20about%20partnership%20opportunities.%0A%0A'">
+      Partner With Us
+    </button>
     <div class="ct a d3">
       <strong>Tarek Al-Jasem</strong> &middot; Founder &middot; The Now Company<br>
-      <a href="mailto:tarek@nowcompany.team?subject=Vibe%20Riyadh%20%E2%80%94%20Partnership%20Enquiry&body=Hi%20Tarek%2C%0A%0AI%E2%80%99m%20interested%20in%20partnering%20with%20Vibe%20Riyadh.%0A%0A">tarek@nowcompany.team</a>
+      <a href="mailto:tarek@nowcompany.team?subject=Vibe%20Riyadh%20%E2%80%94%20General%20Enquiry&body=Hi%20Tarek%2C%0A%0A">tarek@nowcompany.team</a>
     </div>
   </div>
 </section>
@@ -510,78 +493,74 @@ footer {
 <footer>THE NOW COMPANY &nbsp;&middot;&nbsp; VIBE RIYADH</footer>
 
 <script>
-/* ── Intersection observer for scroll animations ── */
-const o = new IntersectionObserver(e => {
-  e.forEach(x => { if (x.isIntersecting) x.target.classList.add('v'); });
-}, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
-document.querySelectorAll('.a').forEach(el => o.observe(el));
+(function() {
+  /* ── Intersection observer for scroll animations ── */
+  const o = new IntersectionObserver(e => {
+    e.forEach(x => { if (x.isIntersecting) x.target.classList.add('v'); });
+  }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+  document.querySelectorAll('.a').forEach(el => o.observe(el));
 
-/* ── City Carousel ── */
-const cities = [
-  { name: 'RIYADH',  label: 'Season 1 · Q4 2026' },
-  { name: 'DUBAI',   label: 'Coming Soon · 2027' },
-  { name: 'KUWAIT',  label: 'Coming Soon · 2027' },
-];
+  /* ── City Carousel ── */
+  const cities = [
+    { name: 'RIYADH',  label: '' },
+    { name: 'DUBAI',   label: '' },
+    { name: 'KUWAIT',  label: '' },
+  ];
 
-let current = 0;
-let autoTimer = null;
+  let current = 0;
+  let autoTimer = null;
 
-const pills    = document.querySelectorAll('.city-pill');
-const dots     = document.querySelectorAll('.carousel-dot');
-const cityName = document.getElementById('city-name');
-const cityLbl  = document.getElementById('city-label');
+  const pills      = document.querySelectorAll('.city-pill');
+  const cityName   = document.getElementById('city-name');
+  const cityLbl    = document.getElementById('city-label');
+  const heroCityEl = document.getElementById('hero-city-name');
+  const navCityEl  = document.getElementById('nav-city');
 
-function goTo(idx, userTriggered = false) {
-  if (idx === current && !userTriggered) return;
+  function goTo(idx) {
+    pills.forEach((p, i) => {
+      p.classList.toggle('active', i === idx);
+      p.classList.toggle('inactive', i !== idx);
+    });
 
-  pills.forEach((p, i) => {
-    p.classList.toggle('active', i === idx);
-    p.classList.toggle('inactive', i !== idx);
+    // Subtitle animation
+    cityName.style.animation = 'none';
+    cityLbl.style.animation  = 'none';
+    void cityName.offsetWidth;
+    void cityLbl.offsetWidth;
+    cityName.textContent = cities[idx].name;
+    cityLbl.textContent  = cities[idx].label;
+    cityName.style.animation = 'slideInCity 0.45s cubic-bezier(0.22,1,0.36,1) both';
+    cityLbl.style.animation  = 'fadeIn 0.45s ease both';
+
+    // Headline animation
+    heroCityEl.style.animation = 'none';
+    void heroCityEl.offsetWidth;
+    heroCityEl.textContent = cities[idx].name + '.';
+    heroCityEl.style.animation = 'slideInCity 0.45s cubic-bezier(0.22,1,0.36,1) both';
+
+    // Nav logo update
+    navCityEl.textContent = cities[idx].name + '.';
+
+    current = idx;
+  }
+
+  // Click on pills
+  pills.forEach(p => {
+    p.addEventListener('click', () => {
+      goTo(+p.dataset.idx);
+      resetTimer();
+    });
   });
 
-  dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+  function resetTimer() {
+    clearInterval(autoTimer);
+    autoTimer = setInterval(() => {
+      goTo((current + 1) % cities.length);
+    }, 4000);
+  }
 
-  cityName.style.animation = 'none';
-  cityLbl.style.animation  = 'none';
-  void cityName.offsetWidth;
-  void cityLbl.offsetWidth;
-
-  cityName.textContent = cities[idx].name;
-  cityLbl.textContent  = cities[idx].label;
-
-  cityName.style.animation = 'slideInCity 0.45s cubic-bezier(0.22,1,0.36,1) both';
-  cityLbl.style.animation  = 'fadeIn 0.45s ease both';
-
-  current = idx;
-  if (userTriggered) resetTimer();
-}
-
-function next() { goTo((current + 1) % cities.length); }
-function prev() { goTo((current - 1 + cities.length) % cities.length, true); }
-
-function resetTimer() {
-  clearInterval(autoTimer);
-  autoTimer = setInterval(next, 4000);
-}
-
-pills.forEach(p => {
-  p.addEventListener('click', () => goTo(+p.dataset.idx, true));
-});
-
-dots.forEach(d => {
-  d.addEventListener('click', () => goTo(+d.dataset.idx, true));
-});
-
-document.getElementById('prev-btn').addEventListener('click', () => { prev(); });
-document.getElementById('next-btn').addEventListener('click', () => {
-  goTo((current + 1) % cities.length, true);
-});
-
-autoTimer = setInterval(next, 4000);
-
-const carousel = document.querySelector('.city-carousel');
-carousel.addEventListener('mouseenter', () => clearInterval(autoTimer));
-carousel.addEventListener('mouseleave', resetTimer);
+  resetTimer();
+})();
 </script>
 
 </body>
