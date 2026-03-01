@@ -163,7 +163,6 @@ nav {
   color: var(--pink);
   letter-spacing: 0.04em;
   display: inline-block;
-  /* slide-in animation */
   animation: slideInCity 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
@@ -349,6 +348,8 @@ nav {
 .cta-btn:hover { background: var(--bg2); color: var(--pink); }
 .cta .ct { margin-top: 1.3rem; font-size: 0.82rem; color: rgba(255,255,255,0.65); }
 .cta .ct strong { color: var(--white); }
+.cta .ct a { color: var(--white); text-decoration: underline; text-underline-offset: 3px; opacity: 0.85; transition: opacity 0.2s; }
+.cta .ct a:hover { opacity: 1; }
 
 footer {
   background: var(--bg2); padding: 1.4rem; text-align: center;
@@ -371,7 +372,7 @@ footer {
 
 <nav>
   <div class="n-logo">VIBE <span>RIYADH.</span></div>
-  <a href="#join" class="n-btn">GET EARLY ACCESS</a>
+  <a href="mailto:tarek@nowcompany.team?subject=Vibe%20Riyadh%20%E2%80%94%20Partnership%20Enquiry&body=Hi%20Tarek%2C%0A%0AI%E2%80%99m%20interested%20in%20partnering%20with%20Vibe%20Riyadh.%0A%0A" class="n-btn">GET EARLY ACCESS</a>
 </nav>
 
 <section class="hero">
@@ -495,8 +496,14 @@ footer {
   <div class="cta-in">
     <h2 class="a">Let's build the future of tech education in the Arabian Gulf.<em>Together.</em></h2>
     <p class="sub a d1">Season 1 launches Q4 2026. Limited to 30 students.</p>
-    <a href="mailto:tarek@thenowcompany.co?subject=Vibe%20Riyadh" class="cta-btn a d2">Partner With Us</a>
-    <div class="ct a d3"><strong>Tarek Al-Jasem</strong> &middot; Founder &middot; The Now Company<br>tarek@thenowcompany.co</div>
+    <a
+      href="mailto:tarek@nowcompany.team?subject=Vibe%20Riyadh%20%E2%80%94%20Partnership%20Enquiry&body=Hi%20Tarek%2C%0A%0AI%E2%80%99m%20interested%20in%20partnering%20with%20Vibe%20Riyadh.%0A%0A"
+      class="cta-btn a d2"
+    >Partner With Us</a>
+    <div class="ct a d3">
+      <strong>Tarek Al-Jasem</strong> &middot; Founder &middot; The Now Company<br>
+      <a href="mailto:tarek@nowcompany.team?subject=Vibe%20Riyadh%20%E2%80%94%20Partnership%20Enquiry&body=Hi%20Tarek%2C%0A%0AI%E2%80%99m%20interested%20in%20partnering%20with%20Vibe%20Riyadh.%0A%0A">tarek@nowcompany.team</a>
+    </div>
   </div>
 </section>
 
@@ -527,19 +534,15 @@ const cityLbl  = document.getElementById('city-label');
 function goTo(idx, userTriggered = false) {
   if (idx === current && !userTriggered) return;
 
-  // Update pills
   pills.forEach((p, i) => {
     p.classList.toggle('active', i === idx);
     p.classList.toggle('inactive', i !== idx);
   });
 
-  // Update dots
   dots.forEach((d, i) => d.classList.toggle('active', i === idx));
 
-  // Animate city name out then in
   cityName.style.animation = 'none';
   cityLbl.style.animation  = 'none';
-  // Force reflow
   void cityName.offsetWidth;
   void cityLbl.offsetWidth;
 
@@ -561,28 +564,21 @@ function resetTimer() {
   autoTimer = setInterval(next, 4000);
 }
 
-// Pill click
 pills.forEach(p => {
   p.addEventListener('click', () => goTo(+p.dataset.idx, true));
 });
 
-// Dot click
 dots.forEach(d => {
   d.addEventListener('click', () => goTo(+d.dataset.idx, true));
 });
 
-// Arrow clicks
-document.getElementById('prev-btn').addEventListener('click', () => {
-  prev();
-});
+document.getElementById('prev-btn').addEventListener('click', () => { prev(); });
 document.getElementById('next-btn').addEventListener('click', () => {
   goTo((current + 1) % cities.length, true);
 });
 
-// Auto-advance
 autoTimer = setInterval(next, 4000);
 
-// Pause on hover
 const carousel = document.querySelector('.city-carousel');
 carousel.addEventListener('mouseenter', () => clearInterval(autoTimer));
 carousel.addEventListener('mouseleave', resetTimer);
