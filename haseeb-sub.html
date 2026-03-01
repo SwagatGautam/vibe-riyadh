@@ -80,10 +80,160 @@ nav {
 .hero h1 .pk { color: var(--pink); display: block; }
 .hero-p { font-weight: 700; font-size: clamp(1.1rem,1.8vw,1.35rem); color: var(--dark); margin-top: 1.4rem; }
 .hero-sm { font-weight: 400; font-size: 1rem; color: var(--muted); margin-top: 0.35rem; }
-.pills { display: flex; gap: 0.4rem; margin-top: 1.6rem; }
-.pl { padding: 0.38rem 0.95rem; font-weight: 700; font-size: 0.72rem; letter-spacing: 0.1em; }
-.pl-on { background: var(--pink); color: var(--white); }
-.pl-off { background: var(--bg2); color: var(--muted); }
+
+/* ── CITY CAROUSEL ── */
+.city-carousel {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-top: 1.6rem;
+  user-select: none;
+}
+
+.city-carousel-track {
+  display: flex;
+  gap: 0.4rem;
+  align-items: center;
+}
+
+.city-pill {
+  padding: 0.38rem 0.95rem;
+  font-weight: 700;
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  border: none;
+  font-family: inherit;
+  transition: background 0.3s ease, color 0.3s ease, transform 0.2s ease;
+  position: relative;
+  white-space: nowrap;
+}
+.city-pill:hover { transform: translateY(-1px); }
+
+.city-pill.active {
+  background: var(--pink);
+  color: var(--white);
+}
+.city-pill.inactive {
+  background: var(--bg2);
+  color: var(--muted);
+}
+.city-pill.inactive:hover {
+  background: #E0DDD8;
+  color: var(--dark);
+}
+
+/* Active pill progress underline */
+.city-pill.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0;
+  height: 2px;
+  background: rgba(255,255,255,0.5);
+  width: 0%;
+  animation: pill-progress 4s linear forwards;
+}
+
+@keyframes pill-progress {
+  from { width: 0%; }
+  to   { width: 100%; }
+}
+
+/* City display area */
+.city-display {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.7rem;
+  min-height: 1.6rem;
+  overflow: hidden;
+  position: relative;
+}
+
+.city-name-wrap {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+
+.city-name {
+  font-weight: 900;
+  font-size: 1.08rem;
+  color: var(--pink);
+  letter-spacing: 0.04em;
+  display: inline-block;
+  /* slide-in animation */
+  animation: slideInCity 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes slideInCity {
+  from { opacity: 0; transform: translateY(120%); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.city-sep {
+  font-weight: 400;
+  font-size: 0.82rem;
+  color: var(--muted);
+  margin: 0 0.1rem;
+}
+
+.city-label {
+  font-weight: 400;
+  font-size: 0.82rem;
+  color: var(--muted);
+  animation: fadeIn 0.45s ease both;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* Carousel arrow buttons */
+.carousel-arrow {
+  background: var(--bg2);
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--dark);
+  font-size: 0.75rem;
+  font-weight: 700;
+  transition: background 0.2s, transform 0.15s;
+  flex-shrink: 0;
+}
+.carousel-arrow:hover {
+  background: var(--pink);
+  color: var(--white);
+  transform: scale(1.08);
+}
+
+/* Dots indicator */
+.carousel-dots {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  margin-left: 0.3rem;
+}
+.carousel-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--bg2);
+  transition: background 0.3s, transform 0.3s;
+  cursor: pointer;
+  border: none;
+}
+.carousel-dot.active {
+  background: var(--pink);
+  transform: scale(1.3);
+}
 
 .h-img {
   position: relative; aspect-ratio: 4/3; overflow: hidden; background: var(--bg2);
@@ -230,14 +380,34 @@ footer {
       <h1 class="a">VIBE<span class="pk">RIYADH.</span></h1>
       <p class="hero-p a d1">The Gulf's first vibe coding academy.</p>
       <p class="hero-sm a d2">2 weeks. 1 real product. No code required.</p>
-      <div class="pills a d2">
-        <span class="pl pl-on">RIYADH</span>
-        <span class="pl pl-off">DUBAI</span>
-        <span class="pl pl-off">KUWAIT</span>
+
+      <!-- City Carousel -->
+      <div class="city-carousel a d2">
+        <button class="carousel-arrow" id="prev-btn" aria-label="Previous city">&#8592;</button>
+        <div class="city-carousel-track" id="carousel-track">
+          <button class="city-pill active" data-idx="0">RIYADH</button>
+          <button class="city-pill inactive" data-idx="1">DUBAI</button>
+          <button class="city-pill inactive" data-idx="2">KUWAIT</button>
+        </div>
+        <div class="carousel-dots" id="carousel-dots">
+          <button class="carousel-dot active" data-idx="0"></button>
+          <button class="carousel-dot" data-idx="1"></button>
+          <button class="carousel-dot" data-idx="2"></button>
+        </div>
+        <button class="carousel-arrow" id="next-btn" aria-label="Next city">&#8594;</button>
+      </div>
+
+      <!-- Animated city subtitle -->
+      <div class="city-display a d3">
+        <div class="city-name-wrap">
+          <span class="city-name" id="city-name">RIYADH</span>
+        </div>
+        <span class="city-sep">&mdash;</span>
+        <span class="city-label" id="city-label">Season 1 &middot; Q4 2026</span>
       </div>
     </div>
     <div class="h-img a d2">
-      <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?w=800&q=80" alt="Team collaborating" onerror="this.remove()">
+      <img src="images/vibe-coding.jpeg" alt="Team collaborating" onerror="this.remove()">
       <div class="h-badge">SEASON 1 &middot; Q4 2026</div>
     </div>
   </div>
@@ -333,10 +503,89 @@ footer {
 <footer>THE NOW COMPANY &nbsp;&middot;&nbsp; VIBE RIYADH</footer>
 
 <script>
+/* ── Intersection observer for scroll animations ── */
 const o = new IntersectionObserver(e => {
   e.forEach(x => { if (x.isIntersecting) x.target.classList.add('v'); });
 }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
 document.querySelectorAll('.a').forEach(el => o.observe(el));
+
+/* ── City Carousel ── */
+const cities = [
+  { name: 'RIYADH',  label: 'Season 1 · Q4 2026' },
+  { name: 'DUBAI',   label: 'Coming Soon · 2027' },
+  { name: 'KUWAIT',  label: 'Coming Soon · 2027' },
+];
+
+let current = 0;
+let autoTimer = null;
+
+const pills    = document.querySelectorAll('.city-pill');
+const dots     = document.querySelectorAll('.carousel-dot');
+const cityName = document.getElementById('city-name');
+const cityLbl  = document.getElementById('city-label');
+
+function goTo(idx, userTriggered = false) {
+  if (idx === current && !userTriggered) return;
+
+  // Update pills
+  pills.forEach((p, i) => {
+    p.classList.toggle('active', i === idx);
+    p.classList.toggle('inactive', i !== idx);
+  });
+
+  // Update dots
+  dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+
+  // Animate city name out then in
+  cityName.style.animation = 'none';
+  cityLbl.style.animation  = 'none';
+  // Force reflow
+  void cityName.offsetWidth;
+  void cityLbl.offsetWidth;
+
+  cityName.textContent = cities[idx].name;
+  cityLbl.textContent  = cities[idx].label;
+
+  cityName.style.animation = 'slideInCity 0.45s cubic-bezier(0.22,1,0.36,1) both';
+  cityLbl.style.animation  = 'fadeIn 0.45s ease both';
+
+  current = idx;
+  if (userTriggered) resetTimer();
+}
+
+function next() { goTo((current + 1) % cities.length); }
+function prev() { goTo((current - 1 + cities.length) % cities.length, true); }
+
+function resetTimer() {
+  clearInterval(autoTimer);
+  autoTimer = setInterval(next, 4000);
+}
+
+// Pill click
+pills.forEach(p => {
+  p.addEventListener('click', () => goTo(+p.dataset.idx, true));
+});
+
+// Dot click
+dots.forEach(d => {
+  d.addEventListener('click', () => goTo(+d.dataset.idx, true));
+});
+
+// Arrow clicks
+document.getElementById('prev-btn').addEventListener('click', () => {
+  prev();
+});
+document.getElementById('next-btn').addEventListener('click', () => {
+  goTo((current + 1) % cities.length, true);
+});
+
+// Auto-advance
+autoTimer = setInterval(next, 4000);
+
+// Pause on hover
+const carousel = document.querySelector('.city-carousel');
+carousel.addEventListener('mouseenter', () => clearInterval(autoTimer));
+carousel.addEventListener('mouseleave', resetTimer);
 </script>
 
 </body>
